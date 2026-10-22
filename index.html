@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17120f">
+<title>Tomato Político | Arena dos Tomates</title>
+<meta name="description" content="Uma arena interativa de sátira política. Lance tomates virtuais e acompanhe o placar da brincadeira.">
+<style>
+:root{--bg:#17120f;--panel:#241c18;--panel2:#30231d;--red:#ef4444;--gold:#ffc857;--text:#fff7ed;--muted:#c9b9ac;--green:#36c98f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#3b2119 0,#17120f 58%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.wrap{max-width:1050px;margin:auto;padding:24px 16px 44px}.top{text-align:center;padding:22px 0 18px}.eyebrow{color:var(--gold);font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.top h1{font-size:clamp(2.2rem,7vw,4.7rem);line-height:.98;margin:12px 0;font-weight:950;letter-spacing:-.055em}.top h1 span{color:var(--red)}.top p{color:var(--muted);max-width:560px;margin:12px auto;line-height:1.55}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#ffffff0d;border:1px solid #ffffff1b;padding:9px 13px;border-radius:999px;font-size:.85rem;color:#f8e8da}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:22px 0}.person{position:relative;background:linear-gradient(150deg,#34251f,#211916);border:1px solid #ffffff1b;border-radius:24px;overflow:hidden;box-shadow:0 18px 55px #0003;cursor:crosshair;transition:transform .18s,border-color .18s;user-select:none;touch-action:manipulation;outline:none}.person:hover{transform:translateY(-3px);border-color:#ef444488}.person:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.portrait{height:clamp(230px,36vw,390px);display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 30%,#705043,#382820 58%,#251b17)}
+.portrait:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:#f2b54415;top:22px}.portrait svg{height:100%;width:100%;max-height:380px;position:relative;z-index:1;filter:drop-shadow(0 14px 15px #0005)}
+.hint{position:absolute;z-index:3;left:50%;bottom:14px;transform:translateX(-50%);background:#17120fdc;border:1px solid #ffffff30;border-radius:999px;padding:9px 13px;white-space:nowrap;font-size:.78rem;font-weight:750;backdrop-filter:blur(8px)}
+.person-info{padding:18px 20px 20px}.person-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.person h2{margin:0;font-size:clamp(1.1rem,3vw,1.65rem);letter-spacing:-.03em}.rank{font-size:.72rem;background:#ffffff10;color:var(--gold);padding:6px 9px;border-radius:999px;font-weight:800}.score{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:950;letter-spacing:-.05em;margin:9px 0 3px}.score small{font-size:1rem}.sub{font-size:.82rem;color:var(--muted)}.meter{height:7px;background:#ffffff12;border-radius:99px;overflow:hidden;margin-top:15px}.meter span{display:block;height:100%;width:50%;background:linear-gradient(90deg,#f87171,#ef4444);border-radius:99px;transition:width .4s}
+.scoreboard{background:#ffffff08;border:1px solid #ffffff17;border-radius:20px;padding:20px;margin:20px 0}.scoreline{display:flex;justify-content:space-between;gap:12px;align-items:center;font-weight:850}.big-total{text-align:center;font-size:clamp(1.7rem,5vw,2.6rem);font-weight:950;margin:8px 0}.big-total small{font-size:.95rem;color:var(--muted);font-weight:600}.split{display:flex;height:12px;overflow:hidden;border-radius:99px;background:#ffffff14;margin:14px 0 9px}.split .left{width:50%;background:#ef4444;transition:width .4s}.split .right{width:50%;background:#f59e0b;transition:width .4s}.legend{display:flex;justify-content:space-between;color:var(--muted);font-size:.8rem}
+.shop{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:20px}.box{border:1px solid #ffffff19;background:linear-gradient(140deg,#2a201b,#211916);border-radius:20px;padding:20px}.box h3{margin:0 0 8px;font-size:1.15rem}.box p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.5}.price{font-size:2rem;font-weight:950;margin:12px 0}.btn{border:0;border-radius:13px;padding:13px 16px;font-size:.95rem;font-weight:850;cursor:pointer;transition:filter .15s,transform .15s}.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.btn-red{background:var(--red);color:white}.btn-light{background:#fff1e5;color:#271711;width:100%;margin-top:12px}.btn-ghost{background:#ffffff10;border:1px solid #ffffff20;color:var(--text)}.tiny{font-size:.75rem!important;margin-top:10px!important}.status{min-height:24px;color:var(--gold);font-size:.85rem;font-weight:700;margin-top:8px}
+footer{text-align:center;color:#a99a8f;font-size:.76rem;line-height:1.55;margin:24px auto 0;max-width:760px}
+.tomato{position:fixed;z-index:50;pointer-events:none;font-size:40px;filter:drop-shadow(0 5px 4px #0005);will-change:transform,opacity}.splat{position:absolute;z-index:5;pointer-events:none;font-size:clamp(2rem,6vw,4rem);animation:splat .65s ease-out forwards}.shake{animation:shake .32s ease-out}.pop{animation:pop .25s ease-out}.toast{position:fixed;z-index:80;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;background:#fff7ed;color:#241610;border-radius:14px;padding:12px 17px;box-shadow:0 12px 40px #0006;font-weight:800;max-width:calc(100% - 30px);text-align:center;transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal-back{position:fixed;inset:0;z-index:100;background:#000a;display:none;place-items:center;padding:18px}.modal-back.open{display:grid}.modal{width:min(100%,440px);background:#251c17;border:1px solid #ffffff26;border-radius:22px;padding:23px;box-shadow:0 24px 80px #0009}.modal h2{margin:0 0 9px}.modal p{color:var(--muted);line-height:1.5;font-size:.9rem}.modal label{display:block;font-size:.82rem;font-weight:800;margin:14px 0 7px}.modal input{width:100%;padding:12px;border-radius:10px;border:1px solid #ffffff2c;background:#17120f;color:white;font:inherit}.modal-actions{display:flex;gap:10px;margin-top:16px}.modal-actions>*{flex:1}.pix-warning{background:#ffcc4d12;border:1px solid #ffcc4d38;border-radius:12px;padding:12px;color:#ffe3a0;font-size:.8rem;line-height:1.45;margin-top:12px}
+@keyframes shake{0%,100%{transform:translateX(0) rotate(0)}20%{transform:translateX(-5px) rotate(-2deg)}40%{transform:translateX(5px) rotate(2deg)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@keyframes splat{0%{transform:scale(.2) rotate(-15deg);opacity:0}30%{transform:scale(1.25) rotate(7deg);opacity:1}100%{transform:scale(1.5) rotate(12deg);opacity:0}}
+@keyframes pop{0%{transform:scale(.8)}70%{transform:scale(1.08)}100%{transform:scale(1)}}
+@media(max-width:650px){.wrap{padding:14px 12px 32px}.top{padding-top:17px}.cards{gap:10px}.portrait{height:235px}.person-info{padding:14px 12px 15px}.person-head{align-items:flex-start;flex-direction:column;gap:7px}.hint{font-size:.68rem;padding:8px 10px;bottom:9px}.shop{grid-template-columns:1fr}.scoreboard{padding:16px}.rank{font-size:.65rem}}
+@media(max-width:380px){.portrait{height:195px}.person h2{font-size:1rem}.score{font-size:1.5rem}.hint{white-space:normal;text-align:center;width:90%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Humor político • edição Brasil</div>
+    <h1>TOMATO <span>POLÍTICO</span> 🍅</h1>
+    <p>Você tem um único tomate. Escolha seu alvo e toque na foto para lançar!</p>
+    <div class="pill">🍅 <span id="freeStatus">Conectando ao placar...</span></div>
+  </header>
+
+  <main>
+    <section class="cards" aria-label="Escolha um personagem">
+      <article class="person" id="person-flavio" data-person="flavio" role="button" tabindex="0" aria-label="Jogar tomate em Flávio Bolsonaro">
+        <div class="portrait" id="portrait-flavio">
+<img class="politician-photo" src="flavio.jpg" alt="Foto de Flávio Bolsonaro" draggable="false">
+<div class="hint">🎯 TOQUE PARA ACERTAR</div>
+        </div>
+        <div class="person-info">
+          <div class="person-head"><h2>Flávio Bolsonaro</h2><span class="rank">NA DISPUTA</span></div>
+          <div class="score"><span id="score-flavio">0</span> <small>🍅</small></div>
+          <div class="sub">tomates recebidos</div>
+          <div class="meter"><span id="meter-flavio"></span></div>
+        </div>
+      </article>
+
+      <article class="person" id="person-lula" data-person="lula" role="button" tabindex="0" aria-label="Jogar tomate em Lula">
+        <div class="portrait" id="portrait-lula">
+<img class="politician-photo" src="lula.jpg" alt="Foto de Lula" draggable="false">
+<div class="hint">🎯 TOQUE PARA ACERTAR</div>
+        </div>
+        <div class="person-info">
+          <div class="person-head"><h2>Lula</h2><span class="rank">NA DISPUTA</span></div>
+          <div class="score"><span id="score-lula">0</span> <small>🍅</small></div>
+          <div class="sub">tomates recebidos</div>
+          <div class="meter"><span id="meter-lula"></span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scoreboard" aria-live="polite">
+      <div class="scoreline"><span>🏆 PLACAR DA DISPUTA</span><span id="leader">Empate!</span></div>
+      <div class="big-total"><span id="total">0</span> <small>tomates no total</small></div>
+      <div class="split"><div class="left" id="split-flavio"></div><div class="right" id="split-lula"></div></div>
+      <div class="legend"><span id="share-flavio">Flávio 50%</span><span id="share-lula">Lula 50%</span></div>
+    </section>
+
+    <section class="howto" aria-label="Como jogar">
+      <div><span class="step">01</span><strong>Escolha o alvo</strong><p>Flávio Bolsonaro ou Lula.</p></div>
+      <div><span class="step">02</span><strong>Toque ou clique</strong><p>O tomate voa até o ponto escolhido.</p></div>
+      <div><span class="step">03</span><strong>Veja o impacto</strong><p>O lançamento é registrado uma única vez por conta.</p></div>
+    </section>
+    <div class="actions"><button class="btn btn-ghost" id="resetDemo">Atualizar placar</button><span>Placar coletivo atualizado automaticamente.</span></div>
+  </main>
+  <footer>Site independente de humor e sátira política, sem vínculo com os personagens retratados. Ilustrações estilizadas. Os tomates não representam votos, pesquisas ou opinião pública. Placar coletivo; não é pesquisa eleitoral. Um lançamento por conta anônima do navegador.</footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<style>
+.politician-photo{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block;user-select:none;pointer-events:none}.portrait:before{display:none}.person.voted{border-color:#36c98f88}.person.voted .hint{background:#155c46e8}.person.busy{opacity:.75;cursor:wait}
+:root{--bg:#100e11;--panel:#201a21;--panel2:#30232b;--red:#ff514f;--gold:#ffce70;--text:#fffaf4;--muted:#c8b8bd}
+body{background:radial-gradient(ellipse at 50% -15%,#59302e 0%,#22151b 40%,#100e11 80%);background-attachment:fixed}
+.wrap{max-width:1120px}.top{padding:45px 0 28px}.top h1{text-shadow:0 6px 40px #0008}.top h1 span{color:#ff665c}.top p{font-size:1.05rem}.cards{gap:22px}.person{border-radius:28px;background:linear-gradient(155deg,#38232b,#19151b);box-shadow:0 24px 65px #0005;cursor:pointer}.person:hover{border-color:#ff6a5a99}.portrait{background:radial-gradient(circle at 50% 30%,#815044,#3d2930 65%,#241b25)}.person:nth-child(2) .portrait{background:radial-gradient(circle at 50% 30%,#6a5648,#2c3036 65%,#1b2028)}.portrait::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#110e18aa,transparent 25%);pointer-events:none}.hint{z-index:6;background:#191218dd;border-color:#ffffff50;box-shadow:0 6px 18px #0005}.person-info{padding:22px 24px 25px}.score{color:#ffdf99;font-variant-numeric:tabular-nums}.scoreboard{background:linear-gradient(125deg,#31202a,#201920);padding:25px;border-radius:25px}.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}.howto>div{padding:20px;border:1px solid #ffffff1b;background:#ffffff08;border-radius:19px}.howto strong{display:block;font-size:1rem}.howto p{color:var(--muted);font-size:.83rem;line-height:1.5;margin:6px 0 0}.step{color:var(--gold);font-size:.78rem;font-weight:900;letter-spacing:.12em;display:block;margin-bottom:10px}.actions{display:flex;align-items:center;gap:15px;justify-content:center;margin:22px 0}.actions span{font-size:.78rem;color:var(--muted)}.tomato{font-size:52px;z-index:100}.splat{z-index:8;font-size:64px;filter:drop-shadow(0 4px 4px #0006)}.hit-ring{position:fixed;z-index:55;width:25px;height:25px;border:4px solid #ffdf83;border-radius:50%;pointer-events:none;animation:ring .5s ease-out forwards}.juice{position:fixed;z-index:54;width:8px;height:8px;background:#ff6654;border-radius:50%;pointer-events:none}.floating-plus{position:fixed;z-index:56;color:#fff0a8;font-size:28px;font-weight:950;text-shadow:0 3px 10px #000;pointer-events:none;animation:floatup .75s ease-out forwards}@keyframes ring{from{transform:translate(-50%,-50%) scale(.2);opacity:1}to{transform:translate(-50%,-50%) scale(4);opacity:0}}@keyframes floatup{from{transform:translate(-50%,-50%);opacity:1}to{transform:translate(-50%,-150%);opacity:0}}@media(max-width:650px){.top{padding:26px 0 20px}.cards{gap:10px}.person-info{padding:15px 12px 18px}.howto{grid-template-columns:1fr;gap:9px}.howto>div{padding:14px 17px}.actions{flex-direction:column}.portrait{height:clamp(205px,55vw,300px)}.scoreboard{padding:18px}}@media(max-width:380px){.portrait{height:195px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const ids=['flavio','lula'];
+ const fmt=n=>Number(n||0).toLocaleString('pt-BR');
+ const scores={flavio:0,lula:0};
+ let db=null, voter=null, busy=false, ready=false, toastTimer;
+ function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000)}
+ function render(){const f=scores.flavio,l=scores.lula,total=f+l,fp=total?100*f/total:50,lp=100-fp;
+ $('score-flavio').textContent=fmt(f);$('score-lula').textContent=fmt(l);$('total').textContent=fmt(total);
+ for(const id of ids){$('meter-'+id).style.width=(id==='flavio'?fp:lp)+'%';$('person-'+id).classList.toggle('voted',voter===id);$('person-'+id).querySelector('.hint').textContent=voter===id?'✓ SEU TOMATE FOI AQUI':voter?'LANÇAMENTO ENCERRADO':'🎯 TOQUE PARA LANÇAR';}
+ $('split-flavio').style.width=fp+'%';$('split-lula').style.width=lp+'%';
+ $('share-flavio').textContent='Flávio '+Math.round(fp)+'%';$('share-lula').textContent='Lula '+Math.round(lp)+'%';
+ $('leader').textContent=f===l?'Empate!':f>l?'Flávio lidera':'Lula lidera';
+ $('freeStatus').textContent=!ready?'Conectando ao placar...':voter?'Você já lançou seu tomate':'Você tem 1 tomate disponível';}
+ async function refresh(){if(!db)return;const {data,error}=await db.rpc('tomato_status');if(error)throw error;
+ scores.flavio=Number(data.flavio||0);scores.lula=Number(data.lula||0);voter=data.my_vote||null;ready=true;render();}
+ function impact(id,x,y){const card=$('person-'+id);const splat=document.createElement('div');splat.className='splat';splat.textContent='🍅';splat.style.position='fixed';splat.style.left=(x-38)+'px';splat.style.top=(y-42)+'px';document.body.appendChild(splat);
+ splat.animate([{transform:'scale(.3) rotate(-30deg)',opacity:0},{transform:'scale(1.35) rotate(10deg)',opacity:1,offset:.3},{transform:'scale(1.6) rotate(22deg)',opacity:0}],{duration:650,easing:'ease-out'}).onfinish=()=>splat.remove();
+ const ring=document.createElement('div');ring.className='hit-ring';ring.style.left=x+'px';ring.style.top=y+'px';document.body.appendChild(ring);setTimeout(()=>ring.remove(),550);
+ for(let i=0;i<11;i++){const bit=document.createElement('div');bit.className='juice';bit.style.left=x+'px';bit.style.top=y+'px';document.body.appendChild(bit);const a=Math.PI*2*i/11,dist=30+Math.random()*65;bit.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},{transform:`translate(${Math.cos(a)*dist}px,${Math.sin(a)*dist+35}px) scale(.2)`,opacity:0}],{duration:550+Math.random()*250,easing:'cubic-bezier(.1,.7,.4,1)'}).onfinish=()=>bit.remove()}
+ const plus=document.createElement('div');plus.className='floating-plus';plus.textContent='+1 🍅';plus.style.left=x+'px';plus.style.top=(y-35)+'px';document.body.appendChild(plus);setTimeout(()=>plus.remove(),800);
+ card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');setTimeout(()=>card.classList.remove('shake'),340);
+ const score=$('score-'+id);score.classList.remove('pop');void score.offsetWidth;score.classList.add('pop');if(navigator.vibrate)navigator.vibrate(35);}
+ function launch(id,event){const portrait=$('portrait-'+id),rect=portrait.getBoundingClientRect();let x=event?.clientX,y=event?.clientY;
+ if(!Number.isFinite(x)||!Number.isFinite(y)||x<rect.left||x>rect.right||y<rect.top||y>rect.bottom){x=rect.left+rect.width*.5;y=rect.top+rect.height*.42}
+ const sx=Math.max(28,Math.min(innerWidth-28,x+(x<innerWidth/2?-105:105))),sy=Math.min(innerHeight-40,y+180);
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches){impact(id,x,y);return}
+ const tomato=document.createElement('div');tomato.className='tomato';tomato.textContent='🍅';tomato.style.left=(sx-26)+'px';tomato.style.top=(sy-26)+'px';document.body.appendChild(tomato);
+ const dx=x-sx,dy=y-sy;tomato.animate([{transform:'translate(0,0) rotate(-35deg) scale(.55)',opacity:.8},{transform:`translate(${dx*.5}px,${dy*.5-95}px) rotate(230deg) scale(1.25)`,opacity:1,offset:.55},{transform:`translate(${dx}px,${dy}px) rotate(590deg) scale(.75)`,opacity:1}],{duration:560,easing:'cubic-bezier(.22,.55,.3,1)'}).onfinish=()=>{tomato.remove();impact(id,x,y)};}
+ async function vote(id,event){if(busy)return;if(!ready){toast('Aguarde a conexão com o placar.');return}if(voter){toast('Você já lançou seu único tomate!');return}
+ busy=true;ids.forEach(k=>$('person-'+k).classList.add('busy'));
+ try{const {data,error}=await db.rpc('tomato_vote',{target:id});if(error)throw error;
+ if(!data.accepted){toast('Seu tomate já foi utilizado.');await refresh();return}
+ voter=id;launch(id,event);await refresh();toast('Tomate lançado! Seu lançamento foi registrado.');}
+ catch(err){toast('Não foi possível registrar: '+(err.message||'tente novamente'));console.error(err)}
+ finally{busy=false;ids.forEach(k=>$('person-'+k).classList.remove('busy'))}}
+ for(const id of ids){const card=$('person-'+id);card.addEventListener('click',e=>vote(id,e));card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();vote(id,null)}})}
+ $('resetDemo').addEventListener('click',async()=>{try{await refresh();toast('Placar atualizado.')}catch{toast('Falha ao atualizar o placar.')}});
+ async function init(){render();const cfg=window.TOMATO_CONFIG||{};if(!cfg.url||!cfg.anonKey||cfg.url.includes('SEU-PROJETO')){$('freeStatus').textContent='Placar temporariamente indisponível';return;return}
+ try{db=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true,autoRefreshToken:true}});
+ let {data:{session},error}=await db.auth.getSession();if(error)throw error;
+ if(!session){const result=await db.auth.signInAnonymously();if(result.error)throw result.error;}
+ await refresh();setInterval(()=>refresh().catch(console.warn),15000);
+ }catch(err){$('freeStatus').textContent='Placar temporariamente indisponível';toast('Não foi possível conectar ao placar. Tente novamente mais tarde.');console.error(err)}}
+ init();
+})();
+</script>
+</body>
+</html>
