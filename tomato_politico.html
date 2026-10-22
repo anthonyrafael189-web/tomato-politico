@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17120f">
+<title>Tomato Político 🍅</title>
+<style>
+:root{--bg:#17120f;--panel:#241c18;--panel2:#30231d;--red:#ef4444;--gold:#ffc857;--text:#fff7ed;--muted:#c9b9ac;--green:#36c98f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#3b2119 0,#17120f 58%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.wrap{max-width:1050px;margin:auto;padding:24px 16px 44px}.top{text-align:center;padding:22px 0 18px}.eyebrow{color:var(--gold);font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.top h1{font-size:clamp(2.2rem,7vw,4.7rem);line-height:.98;margin:12px 0;font-weight:950;letter-spacing:-.055em}.top h1 span{color:var(--red)}.top p{color:var(--muted);max-width:560px;margin:12px auto;line-height:1.55}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#ffffff0d;border:1px solid #ffffff1b;padding:9px 13px;border-radius:999px;font-size:.85rem;color:#f8e8da}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:22px 0}.person{position:relative;background:linear-gradient(150deg,#34251f,#211916);border:1px solid #ffffff1b;border-radius:24px;overflow:hidden;box-shadow:0 18px 55px #0003;cursor:crosshair;transition:transform .18s,border-color .18s;user-select:none;touch-action:manipulation;outline:none}.person:hover{transform:translateY(-3px);border-color:#ef444488}.person:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.portrait{height:clamp(230px,36vw,390px);display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 30%,#705043,#382820 58%,#251b17)}
+.portrait:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:#f2b54415;top:22px}.portrait svg{height:100%;width:100%;max-height:380px;position:relative;z-index:1;filter:drop-shadow(0 14px 15px #0005)}
+.hint{position:absolute;z-index:3;left:50%;bottom:14px;transform:translateX(-50%);background:#17120fdc;border:1px solid #ffffff30;border-radius:999px;padding:9px 13px;white-space:nowrap;font-size:.78rem;font-weight:750;backdrop-filter:blur(8px)}
+.person-info{padding:18px 20px 20px}.person-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.person h2{margin:0;font-size:clamp(1.1rem,3vw,1.65rem);letter-spacing:-.03em}.rank{font-size:.72rem;background:#ffffff10;color:var(--gold);padding:6px 9px;border-radius:999px;font-weight:800}.score{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:950;letter-spacing:-.05em;margin:9px 0 3px}.score small{font-size:1rem}.sub{font-size:.82rem;color:var(--muted)}.meter{height:7px;background:#ffffff12;border-radius:99px;overflow:hidden;margin-top:15px}.meter span{display:block;height:100%;width:50%;background:linear-gradient(90deg,#f87171,#ef4444);border-radius:99px;transition:width .4s}
+.scoreboard{background:#ffffff08;border:1px solid #ffffff17;border-radius:20px;padding:20px;margin:20px 0}.scoreline{display:flex;justify-content:space-between;gap:12px;align-items:center;font-weight:850}.big-total{text-align:center;font-size:clamp(1.7rem,5vw,2.6rem);font-weight:950;margin:8px 0}.big-total small{font-size:.95rem;color:var(--muted);font-weight:600}.split{display:flex;height:12px;overflow:hidden;border-radius:99px;background:#ffffff14;margin:14px 0 9px}.split .left{width:50%;background:#ef4444;transition:width .4s}.split .right{width:50%;background:#f59e0b;transition:width .4s}.legend{display:flex;justify-content:space-between;color:var(--muted);font-size:.8rem}
+.shop{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:20px}.box{border:1px solid #ffffff19;background:linear-gradient(140deg,#2a201b,#211916);border-radius:20px;padding:20px}.box h3{margin:0 0 8px;font-size:1.15rem}.box p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.5}.price{font-size:2rem;font-weight:950;margin:12px 0}.btn{border:0;border-radius:13px;padding:13px 16px;font-size:.95rem;font-weight:850;cursor:pointer;transition:filter .15s,transform .15s}.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.btn-red{background:var(--red);color:white}.btn-light{background:#fff1e5;color:#271711;width:100%;margin-top:12px}.btn-ghost{background:#ffffff10;border:1px solid #ffffff20;color:var(--text)}.tiny{font-size:.75rem!important;margin-top:10px!important}.status{min-height:24px;color:var(--gold);font-size:.85rem;font-weight:700;margin-top:8px}
+footer{text-align:center;color:#a99a8f;font-size:.76rem;line-height:1.55;margin:24px auto 0;max-width:760px}
+.tomato{position:fixed;z-index:50;pointer-events:none;font-size:40px;filter:drop-shadow(0 5px 4px #0005);will-change:transform,opacity}.splat{position:absolute;z-index:5;pointer-events:none;font-size:clamp(2rem,6vw,4rem);animation:splat .65s ease-out forwards}.shake{animation:shake .32s ease-out}.pop{animation:pop .25s ease-out}.toast{position:fixed;z-index:80;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;background:#fff7ed;color:#241610;border-radius:14px;padding:12px 17px;box-shadow:0 12px 40px #0006;font-weight:800;max-width:calc(100% - 30px);text-align:center;transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal-back{position:fixed;inset:0;z-index:100;background:#000a;display:none;place-items:center;padding:18px}.modal-back.open{display:grid}.modal{width:min(100%,440px);background:#251c17;border:1px solid #ffffff26;border-radius:22px;padding:23px;box-shadow:0 24px 80px #0009}.modal h2{margin:0 0 9px}.modal p{color:var(--muted);line-height:1.5;font-size:.9rem}.modal label{display:block;font-size:.82rem;font-weight:800;margin:14px 0 7px}.modal input{width:100%;padding:12px;border-radius:10px;border:1px solid #ffffff2c;background:#17120f;color:white;font:inherit}.modal-actions{display:flex;gap:10px;margin-top:16px}.modal-actions>*{flex:1}.pix-warning{background:#ffcc4d12;border:1px solid #ffcc4d38;border-radius:12px;padding:12px;color:#ffe3a0;font-size:.8rem;line-height:1.45;margin-top:12px}
+@keyframes shake{0%,100%{transform:translateX(0) rotate(0)}20%{transform:translateX(-5px) rotate(-2deg)}40%{transform:translateX(5px) rotate(2deg)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@keyframes splat{0%{transform:scale(.2) rotate(-15deg);opacity:0}30%{transform:scale(1.25) rotate(7deg);opacity:1}100%{transform:scale(1.5) rotate(12deg);opacity:0}}
+@keyframes pop{0%{transform:scale(.8)}70%{transform:scale(1.08)}100%{transform:scale(1)}}
+@media(max-width:650px){.wrap{padding:14px 12px 32px}.top{padding-top:17px}.cards{gap:10px}.portrait{height:235px}.person-info{padding:14px 12px 15px}.person-head{align-items:flex-start;flex-direction:column;gap:7px}.hint{font-size:.68rem;padding:8px 10px;bottom:9px}.shop{grid-template-columns:1fr}.scoreboard{padding:16px}.rank{font-size:.65rem}}
+@media(max-width:380px){.portrait{height:195px}.person h2{font-size:1rem}.score{font-size:1.5rem}.hint{white-space:normal;text-align:center;width:90%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Humor político • edição Brasil</div>
+    <h1>TOMATO <span>POLÍTICO</span> 🍅</h1>
+    <p>Dois nomes, uma disputa e tomates virtuais. Escolha seu alvo e toque na imagem para lançar!</p>
+    <div class="pill">🍅 <span id="freeStatus">Seu tomate diário está disponível</span></div>
+  </header>
+
+  <main>
+    <section class="cards" aria-label="Escolha um personagem">
+      <article class="person" id="person-flavio" data-person="flavio" role="button" tabindex="0" aria-label="Jogar tomate em Flávio Bolsonaro">
+        <div class="portrait" id="portrait-flavio">
+          <!-- Ilustração vetorial original estilizada, não é fotografia -->
+          <svg viewBox="0 0 320 390" role="img" aria-label="Caricatura ilustrada de um político de terno">
+            <defs><linearGradient id="suitF" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#273a4b"/><stop offset="1" stop-color="#111a27"/></linearGradient><linearGradient id="skinF" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2c5a0"/><stop offset="1" stop-color="#c98d68"/></linearGradient></defs>
+            <ellipse cx="160" cy="366" rx="112" ry="12" fill="#000" opacity=".2"/>
+            <path d="M48 390 Q52 285 112 260 L208 260 Q270 285 275 390Z" fill="url(#suitF)"/>
+            <path d="M124 252 L160 303 L196 252 L184 390 L136 390Z" fill="#f7eee3"/>
+            <path d="M144 278 L160 300 L176 278 L169 344 L160 355 L151 344Z" fill="#a92c32"/>
+            <path d="M113 260 L145 279 L160 303 L126 326 L95 278Z" fill="#34495b"/>
+            <path d="M207 260 L176 279 L160 303 L194 326 L225 278Z" fill="#263a4d"/>
+            <path d="M126 225 L124 270 Q160 297 196 270 L194 225Z" fill="url(#skinF)"/>
+            <ellipse cx="105" cy="157" rx="16" ry="24" fill="#cf9874"/><ellipse cx="215" cy="157" rx="16" ry="24" fill="#cf9874"/>
+            <path d="M106 105 Q108 49 160 47 Q216 49 214 111 L207 177 Q197 223 160 229 Q123 223 113 177Z" fill="url(#skinF)"/>
+            <path d="M104 139 Q87 81 119 56 Q143 34 180 47 Q220 52 218 105 L207 119 Q197 89 174 82 Q143 99 112 92Z" fill="#4b3025"/>
+            <path d="M117 137 Q135 127 150 137" fill="none" stroke="#53372b" stroke-width="7" stroke-linecap="round"/><path d="M172 137 Q190 127 203 137" fill="none" stroke="#53372b" stroke-width="7" stroke-linecap="round"/>
+            <ellipse cx="136" cy="151" rx="7" ry="5" fill="#33251f"/><ellipse cx="184" cy="151" rx="7" ry="5" fill="#33251f"/>
+            <path d="M159 151 L150 177 Q160 185 169 177" fill="none" stroke="#b87958" stroke-width="4" stroke-linecap="round"/>
+            <path d="M139 197 Q160 211 182 196 Q161 222 139 197Z" fill="#7f3f39"/><path d="M143 198 Q160 204 178 198" stroke="#fff0e4" stroke-width="3" fill="none"/>
+            <path d="M110 170 Q113 215 160 231 Q205 219 210 170 Q200 226 160 235 Q119 224 110 170Z" fill="#b8785a" opacity=".35"/>
+            <path d="M109 151 Q112 119 127 113 M194 113 Q211 124 211 151" fill="none" stroke="#fff0e5" stroke-width="3" opacity=".2"/>
+          </svg>
+          <div class="hint">👆 Toque para jogar tomate</div>
+        </div>
+        <div class="person-info">
+          <div class="person-head"><h2>Flávio Bolsonaro</h2><span class="rank">NA DISPUTA</span></div>
+          <div class="score"><span id="score-flavio">0</span> <small>🍅</small></div>
+          <div class="sub">tomates recebidos</div>
+          <div class="meter"><span id="meter-flavio"></span></div>
+        </div>
+      </article>
+
+      <article class="person" id="person-lula" data-person="lula" role="button" tabindex="0" aria-label="Jogar tomate em Lula">
+        <div class="portrait" id="portrait-lula">
+          <!-- Ilustração vetorial original estilizada, não é fotografia -->
+          <svg viewBox="0 0 320 390" role="img" aria-label="Caricatura ilustrada de um político de terno e barba">
+            <defs><linearGradient id="suitL" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#263e4a"/><stop offset="1" stop-color="#14252b"/></linearGradient><linearGradient id="skinL" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c98e66"/><stop offset="1" stop-color="#a9684b"/></linearGradient></defs>
+            <ellipse cx="160" cy="366" rx="112" ry="12" fill="#000" opacity=".2"/>
+            <path d="M45 390 Q54 286 112 263 L208 263 Q266 286 275 390Z" fill="url(#suitL)"/>
+            <path d="M124 254 L160 302 L196 254 L184 390 L136 390Z" fill="#eee5d9"/>
+            <path d="M143 279 L160 302 L177 279 L170 343 L160 354 L150 343Z" fill="#b43d37"/>
+            <path d="M111 263 L145 280 L160 302 L126 326 L94 280Z" fill="#354d59"/>
+            <path d="M209 263 L176 280 L160 302 L194 326 L226 280Z" fill="#263d49"/>
+            <path d="M126 230 L124 269 Q160 296 196 269 L194 230Z" fill="url(#skinL)"/>
+            <ellipse cx="105" cy="157" rx="16" ry="24" fill="#b97854"/><ellipse cx="215" cy="157" rx="16" ry="24" fill="#b97854"/>
+            <path d="M105 109 Q109 53 160 50 Q213 52 215 110 L207 177 Q198 217 160 226 Q122 217 113 177Z" fill="url(#skinL)"/>
+            <path d="M106 124 Q89 72 122 54 Q151 35 187 52 Q220 66 214 125 L203 111 Q191 91 175 90 Q146 102 114 91Z" fill="#d5d1c8"/>
+            <path d="M117 138 Q135 130 150 138" fill="none" stroke="#65574e" stroke-width="7" stroke-linecap="round"/><path d="M172 138 Q190 130 203 138" fill="none" stroke="#65574e" stroke-width="7" stroke-linecap="round"/>
+            <ellipse cx="136" cy="152" rx="7" ry="5" fill="#33251f"/><ellipse cx="184" cy="152" rx="7" ry="5" fill="#33251f"/>
+            <path d="M159 151 L150 177 Q160 185 169 177" fill="none" stroke="#965e43" stroke-width="4" stroke-linecap="round"/>
+            <path d="M116 175 Q120 213 160 222 Q200 213 204 175 L196 198 Q181 229 160 230 Q139 229 124 198Z" fill="#ded8ce"/>
+            <path d="M140 192 Q160 198 180 192 Q160 212 140 192Z" fill="#8b4b3d"/><path d="M145 194 Q160 199 175 194" stroke="#fff0e4" stroke-width="3" fill="none"/>
+          </svg>
+          <div class="hint">👆 Toque para jogar tomate</div>
+        </div>
+        <div class="person-info">
+          <div class="person-head"><h2>Lula</h2><span class="rank">NA DISPUTA</span></div>
+          <div class="score"><span id="score-lula">0</span> <small>🍅</small></div>
+          <div class="sub">tomates recebidos</div>
+          <div class="meter"><span id="meter-lula"></span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scoreboard" aria-live="polite">
+      <div class="scoreline"><span>🏆 PLACAR DA DISPUTA</span><span id="leader">Empate!</span></div>
+      <div class="big-total"><span id="total">0</span> <small>tomates no total</small></div>
+      <div class="split"><div class="left" id="split-flavio"></div><div class="right" id="split-lula"></div></div>
+      <div class="legend"><span id="share-flavio">Flávio 50%</span><span id="share-lula">Lula 50%</span></div>
+    </section>
+
+    <section class="shop">
+      <div class="box">
+        <h3>🍅 Quer jogar mais?</h3>
+        <p>Pacote de 10 tomates extras para continuar na disputa.</p>
+        <div class="price">R$ 4,90 <span style="font-size:.95rem;color:var(--muted);font-weight:650">/ 10 tomates</span></div>
+        <button class="btn btn-red" id="buyBtn">Comprar por Pix</button>
+        <p class="tiny">A compra real só poderá liberar tomates depois da confirmação do pagamento pelo provedor Pix.</p>
+      </div>
+      <div class="box">
+        <h3>🎁 Tomate diário</h3>
+        <p id="dailyText">Um tomate grátis a cada 24 horas. Escolha um personagem e toque diretamente na imagem.</p>
+        <div class="status" id="dailyStatus"></div>
+        <button class="btn btn-ghost" id="resetDemo" style="margin-top:12px">Reiniciar demonstração</button>
+        <p class="tiny">O modo demonstração salva a contagem neste navegador; não é um placar global nem um bloqueio antifraude.</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    Site de humor e sátira política. As ilustrações são desenhos vetoriais estilizados, não fotografias. A pontuação é gerada pelos visitantes e não representa pesquisa eleitoral.<br>
+    Demonstração HTML: pagamentos Pix reais, autenticação, limite por usuário e placar compartilhado exigem backend.
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal-back" id="pixModal" role="dialog" aria-modal="true" aria-labelledby="pixTitle">
+  <div class="modal">
+    <h2 id="pixTitle">Pagar com Pix 🍅</h2>
+    <p>O pacote contém 10 tomates por R$ 4,90. Para cobrar de verdade, configure um provedor Pix (por exemplo, Mercado Pago) no servidor e confirme o pagamento por webhook.</p>
+    <div class="pix-warning"><strong>Modo demonstração:</strong> este HTML não gera uma cobrança Pix real nem confirma pagamentos. Não envie dinheiro para uma chave exibida por uma página não configurada.</div>
+    <label for="pixProvider">Provedor de pagamento</label>
+    <input id="pixProvider" value="Mercado Pago (integração pendente)" readonly>
+    <div class="modal-actions"><button class="btn btn-ghost" id="closeModal">Fechar</button><button class="btn btn-red" id="pixInfo">Ver instruções</button></div>
+    <p class="tiny" id="pixMore" hidden>Próximo passo: criar uma função backend para gerar a cobrança Pix de R$ 4,90, mostrar o QR Code e o código copia e cola retornados pelo provedor e creditar 10 tomates somente após validar a notificação autenticada de pagamento aprovado.</p>
+  </div>
+</div>
+<script>
+(() => {
+  const KEY = 'tomatoPoliticoDemo_v1';
+  const DAY = 24 * 60 * 60 * 1000;
+  const initial = {scores:{flavio:0,lula:0}, freeUsedAt:0, credits:0, lastTarget:null};
+  let state;
+  try { state = {...initial, ...JSON.parse(localStorage.getItem(KEY) || '{}')}; } catch { state = {...initial}; }
+  state.scores = {...initial.scores, ...(state.scores || {})};
+  const $ = id => document.getElementById(id);
+  const fmt = n => Math.max(0, Number(n)||0).toLocaleString('pt-BR');
+  function save(){ try {localStorage.setItem(KEY,JSON.stringify(state));} catch {} }
+  function available(){return !state.freeUsedAt || Date.now()-state.freeUsedAt >= DAY;}
+  function render(){
+    const f=state.scores.flavio||0, l=state.scores.lula||0, total=f+l;
+    $('score-flavio').textContent=fmt(f); $('score-lula').textContent=fmt(l); $('total').textContent=fmt(total);
+    const fp=total?f/total*100:50, lp=100-fp;
+    $('meter-flavio').style.width=fp+'%'; $('meter-lula').style.width=lp+'%';
+    $('split-flavio').style.width=fp+'%'; $('split-lula').style.width=lp+'%';
+    $('share-flavio').textContent='Flávio '+Math.round(fp)+'%'; $('share-lula').textContent='Lula '+Math.round(lp)+'%';
+    $('leader').textContent=f===l?'Empate!':(f>l?'Flávio está na frente':'Lula está na frente');
+    $('freeStatus').textContent=available()?'Seu tomate diário está disponível':'Seu tomate diário já foi usado';
+    $('dailyStatus').textContent=available()?'🍅 Você ainda tem seu tomate grátis hoje.':`Tomate grátis disponível novamente ${new Date(state.freeUsedAt+DAY).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}`;
+    $('dailyText').textContent=available()?'Um tomate grátis a cada 24 horas. Escolha um personagem e toque diretamente na imagem.':'Você já usou o tomate grátis deste período neste navegador.';
+  }
+  let toastTimer;
+  function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600);}
+  function launchTomato(target, startX, startY){
+    const card=$('person-'+target), rect=card.getBoundingClientRect(), destX=rect.left+rect.width*.52, destY=rect.top+rect.height*.40;
+    const tomato=document.createElement('div');tomato.className='tomato';tomato.textContent='🍅';tomato.style.left=(startX-20)+'px';tomato.style.top=(startY-20)+'px';document.body.appendChild(tomato);
+    const dx=destX-startX, dy=destY-startY;
+    const anim=tomato.animate([{transform:'translate(0,0) rotate(0) scale(.75)',opacity:1},{transform:`translate(${dx*.55}px,${dy*.45-65}px) rotate(300deg) scale(1.25)`,opacity:1,offset:.65},{transform:`translate(${dx}px,${dy}px) rotate(620deg) scale(.5)`,opacity:.15}],{duration:520,easing:'cubic-bezier(.2,.75,.25,1)'});
+    anim.onfinish=()=>{tomato.remove();impact(target,destX,destY);};
+  }
+  function impact(target,x,y){
+    const card=$('person-'+target), splat=document.createElement('div');splat.className='splat';splat.textContent='💥🍅';splat.style.left=(x-40)+'px';splat.style.top=(y-35)+'px';document.body.appendChild(splat);setTimeout(()=>splat.remove(),700);
+    card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');setTimeout(()=>card.classList.remove('shake'),350);
+    $(target==='flavio'?'score-flavio':'score-lula').classList.remove('pop');void $(target==='flavio'?'score-flavio':'score-lula').offsetWidth;$(target==='flavio'?'score-flavio':'score-lula').classList.add('pop');
+  }
+  function throwTomato(target, event){
+    const now=Date.now();
+    if(!available()){
+      if(state.credits>0){state.credits--;state.scores[target]=(state.scores[target]||0)+1;save();render();const x=event?.clientX ?? innerWidth/2,y=event?.clientY ?? innerHeight/2;launchTomato(target,x,y);toast('Tomate lançado! Restam '+state.credits+' tomate(s) extra(s).');return;}
+      toast('Seu tomate grátis já foi usado. Compre tomates extras para continuar!');$('pixModal').classList.add('open');return;
+    }
+    state.freeUsedAt=now;state.lastTarget=target;state.scores[target]=(state.scores[target]||0)+1;save();render();
+    const x=event?.clientX ?? innerWidth/2, y=event?.clientY ?? innerHeight/2;launchTomato(target,x,y);toast('Tomate lançado! +1 para '+(target==='flavio'?'Flávio Bolsonaro':'Lula')+' 🍅');
+  }
+  ['flavio','lula'].forEach(target=>{
+    const card=$('person-'+target);
+    card.addEventListener('click',e=>throwTomato(target,e));
+    card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();const r=card.getBoundingClientRect();throwTomato(target,{clientX:r.left+r.width/2,clientY:r.top+r.height/2});}});
+  });
+  $('buyBtn').addEventListener('click',()=>$('pixModal').classList.add('open'));
+  $('closeModal').addEventListener('click',()=>$('pixModal').classList.remove('open'));
+  $('pixModal').addEventListener('click',e=>{if(e.target===$('pixModal'))$('pixModal').classList.remove('open');});
+  $('pixInfo').addEventListener('click',()=>{$('pixMore').hidden=!$('pixMore').hidden;$('pixInfo').textContent=$('pixMore').hidden?'Ver instruções':'Ocultar instruções';});
+  $('resetDemo').addEventListener('click',()=>{if(confirm('Zerar a pontuação local e restaurar o tomate diário desta demonstração?')){state={...initial,scores:{flavio:0,lula:0}};save();render();toast('Demonstração reiniciada.');}});
+  render();
+})();
+</script>
+</body>
+</html>
